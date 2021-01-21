@@ -40,6 +40,12 @@
         "es5/no-unicode-code-point-escape": "off",
         "es5/no-unicode-regex": "off"
       }
+    },
+    {
+      "files": ["src/ui/**/*"],
+      "rules": {
+        "es5/no-object-super": "off"
+      }
     }
   ]
 }

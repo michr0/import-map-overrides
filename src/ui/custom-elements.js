@@ -1,4 +1,4 @@
-import "./import-map-overrides.css";
+import styles from "./import-map-overrides.css";
 import { render, h } from "preact";
 import FullUI from "./full-ui.component";
 import Popup from "./popup.component";
@@ -22,6 +22,13 @@ if (window.customElements && !isDisabled) {
 
 function preactCustomElement(Comp, observedAttributes = []) {
   return class PreactCustomElement extends HTMLElement {
+    constructor() {
+      super();
+      this.shadow = this.attachShadow({ mode: "open" });
+      const styleSheet = document.createElement("style");
+      styleSheet.textContent = styles;
+      this.shadow.appendChild(styleSheet);
+    }
     connectedCallback() {
       this.renderWithPreact();
     }
@@ -38,7 +45,7 @@ function preactCustomElement(Comp, observedAttributes = []) {
     renderWithPreact() {
       this.renderedEl = render(
         h(Comp, { customElement: this }),
-        this,
+        this.shadow,
         this.renderedEl
       );
     }
